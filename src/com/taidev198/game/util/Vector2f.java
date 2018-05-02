@@ -1,0 +1,92 @@
+package com.taidev198.game.util;
+
+public class Vector2f {
+    public float x;
+    public float y;
+
+    public static float worldX;
+    public static float worldY;
+
+    public float velX;
+    public float velY;
+
+    public float getVelX() {
+        return velX;
+    }
+
+    public void setVelX(float velX) {
+        this.velX = velX;
+    }
+
+    public float getVelY() {
+        return velY;
+    }
+
+    public void setVelY(float velY) {
+        this.velY = velY;
+    }
+
+    public Vector2f() {
+        x = 0;
+        y = 0;
+    }
+
+    public Vector2f(Vector2f pos) {
+        new Vector2f(pos.x, pos.y);
+    }
+
+    public Vector2f(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Vector2f getVector(){
+        return new Vector2f(x,y);
+    }
+
+    public void addX(float i) { x += i; }
+    public void addY(float i) { y += i; }
+
+    public void setX(float i) { x = i; }
+    public void setY(float i) { y = i; }
+
+    public void setVector(Vector2f vec) {
+        this.x = vec.x;
+        this.y = vec.y;
+    }
+
+    public void setVector(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public static void setWorldVar(float x, float y) {
+        worldX = x;
+        worldY = y;
+    }
+
+    public Vector2f getWorldVar() {
+        return new Vector2f(x - worldX, y - worldY);
+    }
+
+    public Vector2f getTileWorldVar() {
+        return new Vector2f(x + worldX, y + worldY);
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return x + ", " + y;
+    }
+
+
+}
