@@ -1,55 +1,54 @@
-package com.taidev198.game.audio;
+package com.taidev198.game.sound;
 
+import com.taidev198.game.Game;
 
-import javafx.scene.media.AudioClip;
+import java.applet.Applet;
+import java.applet.AudioClip;
 
-import javax.sound.sampled.*;
-import java.io.IOException;
 import java.net.URL;
 
-public enum SoundEffect {
-    EXPLODE("explode.wav"),   // explosion
-    GONG("gong.wav"),         // gong
-    SHOOT("shoot.wav");       // bullet
+public class   SoundEffect {
 
-    // Nested class for specifying volume
-    public static enum Volume {
-        MUTE, LOW, MEDIUM, HIGH
-    }
-
-    public static Volume volume = Volume.LOW;
+    private static final String EXPLODE = "/audio/explode.wav";   // explosion
+  private static final String GotItem = "/audio/cheering.wav";         // gong
+  private static final String BACKGROUND = "/audio/background.wav";//background
+  private static final String SHOOT = "/audio/shot.wav";       // bullet
 
     // Each sound effect has its own clip, loaded with its own sound file.
-    private Clip clip;
+    private AudioClip clipExplode;
+    private AudioClip clipGotItem;
+    private AudioClip clipBackground;
+    private AudioClip clipShot;
+
+
 
     // Constructor to construct each element of the enum with its own sound file.
-    SoundEffect(String soundFileName) {
-        try {
-            // Use URL (instead of File) to read from disk and JAR.
-            URL url = this.getClass().getClassLoader().getResource(soundFileName);
-            // Set up an audio input stream piped from the sound file.
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
-            // Get a clip resource.
-            clip = AudioSystem.getClip();
-            // Open audio clip and load samples from the audio input stream.
-            clip.open(audioInputStream);
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-            e.printStackTrace();
-        }
+    public SoundEffect() {
+        URL url = Game.class.getResource(EXPLODE);
+        clipExplode = Applet.newAudioClip(url);
+         url = Game.class.getResource(BACKGROUND);
+        clipBackground = Applet.newAudioClip(url);
+         url = Game.class.getResource(SHOOT);
+        clipShot = Applet.newAudioClip(url);
+        url = Game.class.getResource(GotItem);
+        clipGotItem = Applet.newAudioClip(url);
     }
 
-    // Play or Re-play the sound effect from the beginning, by rewinding.
-    public void play() {
-        if (volume != Volume.MUTE) {
-            if (clip.isRunning())
-                clip.stop();   // Stop the player if it is still running
-            clip.setFramePosition(0); // rewind to the beginning
-            clip.start();     // Start playing
-        }
+    public synchronized void Explode(){
+        clipExplode.play();
     }
 
-    // Optional static method to pre-load all the sound files.
-    static void init() {
-        values(); // calls the constructor for all the elements
+    public void background(){
+        clipBackground.play();
     }
+
+    public synchronized void shot(){
+        clipShot.play();
+
+    }
+
+    public void gotItem(){
+        clipGotItem.play();
+    }
+
 }

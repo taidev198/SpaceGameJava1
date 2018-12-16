@@ -1,4 +1,4 @@
 package com.taidev198.game.state;
 
-public class GameState {
+public abstract class GameState {
 }
